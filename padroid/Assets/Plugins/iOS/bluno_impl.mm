@@ -16,6 +16,9 @@
 }
 
 - (void) connect {
+    if(self.aryDevices == nil || [self.aryDevices count] == 0)
+        return;
+
     DFBlunoDevice* device = [self.aryDevices objectAtIndex:0];
     
     for (DFBlunoDevice* bleDevice in self.aryDevices)
