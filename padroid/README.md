@@ -1,3 +1,5 @@
+![](Assets/res/icon.png)
+
 [简体中文](#简体中文)
 
 [English](#english)
