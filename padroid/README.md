@@ -16,7 +16,7 @@ Paduino 是一个运行在 iOS 设备上的程序，通过它你可以将你的�
 **构建方式**
 
  * 使用 Unity3D 构建 iOS 平台项目
- * 使用 XCode 编译并部署 iOS 项目到设备
+ * 使用 Xcode 编译并部署 iOS 项目到设备
  * 将 Arduino_Sample/pilot 文件夹中的 Arduino 项目编译烧写到 Arduino 开发板
 
 **指令列表**
@@ -51,7 +51,7 @@ Paduino is an App running on an iOS device, which can make your mobile phone int
 **Setup**
 
  * Build the iOS platform target project with Unity3D
- * Build and distribute iOS App with XCode to your iOS device
+ * Build and distribute iOS App with Xcode to your iOS device
  * Compile and burn the scratch in the Arduino_Sample/pilot folder to your Arduino board
 
 **AT command list**
