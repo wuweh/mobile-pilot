@@ -1,4 +1,7 @@
 #import "bluno_impl.h"
+#import "bluno.h"
+
+#define CONTAINS(str1, str2) ([str1 rangeOfString: str2].location != NSNotFound)
 
 @implementation BlunoImpl
 
@@ -13,7 +16,20 @@
 }
 
 - (void) connect {
-	DFBlunoDevice* device = [self.aryDevices objectAtIndex:0];
+    DFBlunoDevice* device = [self.aryDevices objectAtIndex:0];
+    
+    for (DFBlunoDevice* bleDevice in self.aryDevices)
+    {
+        //BOOL isBluno = [[bleDevice.name lowercaseString] isEqualToString: @"bluno"] || [[bleDevice.identifier lowercaseString] isEqualToString: @"bluno"];
+        BOOL isBluno = CONTAINS([bleDevice.name lowercaseString], @"bluno") || CONTAINS([bleDevice.identifier lowercaseString], @"bluno");
+        if (isBluno)
+        {
+            device = bleDevice;
+            
+            break;
+        }
+    }
+    
     if (self.blunoDev == nil)
     {
         self.blunoDev = device;
@@ -36,6 +52,8 @@
         
         [self.blunoManager connectToDevice:device];
     }
+    
+    bl_msg_box("Connected", [self.blunoDev.name UTF8String]);
 }
 
 - (void) send : (NSString*) msg {
@@ -85,7 +103,8 @@
     BOOL bRepeat = NO;
     for (DFBlunoDevice* bleDevice in self.aryDevices)
     {
-		BOOL isBluno = [bleDevice.name isEqualToString: @"bluno"] || [bleDevice.identifier isEqualToString: @"bluno"];
+		//BOOL isBluno = [[bleDevice.name lowercaseString] isEqualToString: @"bluno"] || [[bleDevice.identifier lowercaseString] isEqualToString: @"bluno"];
+        BOOL isBluno = CONTAINS([bleDevice.name lowercaseString], @"bluno") || CONTAINS([bleDevice.identifier lowercaseString], @"bluno");
         if (isBluno && [bleDevice isEqual:dev])
         {
             bRepeat = YES;
