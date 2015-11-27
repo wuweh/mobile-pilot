@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.EventSystems;
 using System.Collections;
 using System.Runtime.InteropServices;
@@ -12,6 +12,7 @@ public class Main : MonoBehaviour {
     private static void bl_connect() {
     }
     private static void bl_send(string msg) {
+        print(msg);
     }
 
     private static void bl_msg_box(string title, string message) {
@@ -49,8 +50,13 @@ public class Main : MonoBehaviour {
         bl_close();
     }
 
+	public void OnApplicationPause(bool p) {
+		if (!p)
+			bl_connect();
+	}
+
 	private void Start() {
-        bl_connect();
+        //bl_connect();
 
         left.UiPointerDown += OnLeftDown;
         left.UiPointerUp += OnLeftUp;
@@ -74,8 +80,10 @@ public class Main : MonoBehaviour {
                 OnLeftUp(null, null);
             }
         } else {
-            Send("<" + ((int)leftData.Value.x).ToString() + "," + ((int)leftData.Value.y).ToString());
-            leftTimeStamp = Time.realtimeSinceStartup;
+			if (Time.realtimeSinceStartup - leftTimeStamp > 1.0f / 18.0f) {
+				leftTimeStamp = Time.realtimeSinceStartup;
+            	Send("<" + ((int)leftData.Value.x).ToString() + "," + ((int)leftData.Value.y).ToString());
+			}
         }
 
         if (rightData == null) {
@@ -84,13 +92,14 @@ public class Main : MonoBehaviour {
                 OnRightUp(null, null);
             }
         } else {
-            Send(">" + ((int)rightData.Value.x).ToString() + "," + ((int)rightData.Value.y).ToString());
-            rightTimeStamp = Time.realtimeSinceStartup;
+			if (Time.realtimeSinceStartup - rightTimeStamp > 1.0f / 18.0f) {
+				rightTimeStamp = Time.realtimeSinceStartup;
+	            Send(">" + ((int)rightData.Value.x).ToString() + "," + ((int)rightData.Value.y).ToString());
+			}
         }
 	}
 
     private void Send(string msg) {
-        print(msg);
         bl_send(msg + ";");
     }
 	
