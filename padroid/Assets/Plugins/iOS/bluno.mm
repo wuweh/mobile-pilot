@@ -17,7 +17,7 @@ void bl_close(void) {
 }
 
 void bl_connect(void) {
-	//[impl connect];
+	[impl connect];
 }
 
 void bl_send(const char* msg) {
