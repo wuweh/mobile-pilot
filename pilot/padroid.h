@@ -34,4 +34,3 @@ void pd_set_callback(pd_callback2 leftpad, pd_callback2 rightpad, pd_callback1 s
 void pd_receive(void);
 
 #endif // __PADROID_H__
-
