@@ -1,6 +1,6 @@
 [简体中文](#简体中文)
 
-[English](#English)
+[English](#english)
 
 ## 简体中文
 
