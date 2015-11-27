@@ -11,6 +11,8 @@ static pd_callback1 _start = NULL;
 static char _buf[16];
 static int _cursor = 0;
 
+static unsigned long _alive_timestamp = 0;
+
 static void _pd_parse_vec2(int* x, int* y) {
   char* part = strtok(_buf + 1, ",");
   *x = atoi(part);
@@ -57,6 +59,17 @@ void pd_set_callback(pd_callback2 leftpad, pd_callback2 rightpad, pd_callback1 s
 }
 
 void pd_receive(void) {
+  unsigned long now = millis();
+  if (Serial.available()) {
+    _alive_timestamp = now;
+  } else {
+    if (now - _alive_timestamp > 1200) {
+      _alive_timestamp = now;
+      if (_leftpad) _leftpad(0, 0);
+      if (_rightpad) _rightpad(0, 0);
+    }
+  }
+
   while (Serial.available()) {
     int r = Serial.read();
     //Serial.write(r);
@@ -68,4 +81,3 @@ void pd_receive(void) {
     }
   }
 }
-
