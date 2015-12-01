@@ -17,7 +17,7 @@ ArduPilot/APM是由一个大型爱好者社区开发。由于ArduPilot开源特�
 
 **3.发射机**
 
-飞行器是通过接收`发射机（如下图,类似于PS手柄）`发出的10路通道(channel)模拟信号，进行控制飞行器的四个主要参数：旋转roll，偏航yaw，油门throttle，斜坡pitch等。<br />
+飞行器是通过接收`发射机（如下图,类似于PS手柄）`发出的10路通道(channel)模拟信号，进行控制飞行器的四个主要参数：旋转度roll，偏转度yaw，油门throttle，斜度pitch等。<br />
 
 ![发射机 icon](http://copter.ardupilot.com/wp-content/uploads/sites/2/2012/01/radio_setup1.png)<br />
 
@@ -40,6 +40,27 @@ ArduPilot所依赖的库均在这部分。<br />
 **5.External Support Code**<br />
 对于其他平台，需要外部支持的代码。在相同的平台下，开发者有时仍然需要这些外部支持代码向其提供额外的特性和主板支持。例如：<br />
 *PX4NuttX-板载实时系统，它是用在PX4主板上NuttX RTOS实时系统的核心模块；PX4Firmware-PX4的中间件以及PX4的驱动层；mavlink－mavlink通讯协议以其核心生成器；uavcan-ArduPilot中uavcan CANBUS总线接口协议的具体实现；*
+
+###Copter Code Overview
+ArduPilot中的Copter模块是为多旋翼飞行器而开发的飞行控制软件层。四轴飞行器则为多旋翼飞行器的一种。这也意味着，Copter模块是四轴飞行器的核心控制模块。ArduPilot为四轴飞行器定义了许多种飞行模式，从上层抽象来看，这些模式输出到发动机大体分为两种形式：Manual手动飞行模式，AutoPilot自动导航模式。每个模式的具体实现都包括在一个名为`control_mode.cpp`文件中，例如control_stabilize.cpp，以及control_rtl.cpp。
+
+**1.Manual飞行模式**
+手动飞行模式包含了最常用的`Stabilize`（自稳模式）。在手动飞行模式下，每个具体模式都拥有自己的初始化函数`mode_init()`和运行函数`mode_run()`。<br />
+***mode_init()***<br />
+每次飞行器启动时，会选择一个具体的飞行模式。这时就会调用在flight_mode.cpp文件中的`set_mode()`函数。这个函数会根据传入的相应模式，调用该模式的`mode_init()`函数，进行初始化操作。例如在`stabilize_init()`函数中，会调用pos_control类中的成员函数`set_alt_target()`，将目标高度初始化为0。这样做的目的在于激活`pos controller`(位置控制器)，使其能够将高度错误反馈出来。<br />
+***mode_run()***<br />
+同样的，在飞行器运行时，飞控会调用`update_flight_mode()`，再根据具体的模式，调用该模式的`mode_run()`函数。例如`stabilize_run()`函数将发射器输入转换为目标参数（roll旋转，pitch斜度，yaw angles偏转角度）。
+![Manual Mode](http://dev.ardupilot.com/wp-content/uploads/sites/6/2013/06/AC_CodeOverview_ManualFlightMode.png)
+
+**2.AutoPilot飞行模式**<br />
+在AutoPilot飞行模式中，包含定高模式（AltHold），返航模式（RTL），自动模式（Auto）等等。<br />
+![AutoPilot Mode](http://dev.ardupilot.com/wp-content/uploads/sites/6/2013/06/AC_CodeOverview_AutoFlightModes.png)
+***Auto Mode***
+自动模式中，飞行器会遵循事先设定好的任务程序，由导航指令（例如：中途点waypoints）和“执行”指令（例如：按相机快门或其他不影响飞行器位置的指令）组成，存储在AutoPilot中。
+![AutoPilot OverView](http://copter.ardupilot.tw/wp-content/uploads/2014/09/auto.png)
+自动模式整合定高模式的高度控制，和悬停模式的位置控制
+
+
 
 
 
