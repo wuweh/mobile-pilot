@@ -74,13 +74,15 @@ public class Main : MonoBehaviour {
 	}
 
 	private void Update() {
+		float interval = leftData != null && rightData != null ? 10.0f : 18.0f;
+
         if (leftData == null) {
             if (Time.realtimeSinceStartup - leftTimeStamp > 1.0f) {
                 leftTimeStamp = Time.realtimeSinceStartup;
                 OnLeftUp(null, null);
             }
         } else {
-			if (Time.realtimeSinceStartup - leftTimeStamp > 1.0f / 18.0f) {
+			if (Time.realtimeSinceStartup - leftTimeStamp > 1.0f / interval) {
 				leftTimeStamp = Time.realtimeSinceStartup;
             	Send("<" + ((int)leftData.Value.x).ToString() + "," + ((int)leftData.Value.y).ToString());
 			}
@@ -92,7 +94,7 @@ public class Main : MonoBehaviour {
                 OnRightUp(null, null);
             }
         } else {
-			if (Time.realtimeSinceStartup - rightTimeStamp > 1.0f / 18.0f) {
+			if (Time.realtimeSinceStartup - rightTimeStamp > 1.0f / interval) {
 				rightTimeStamp = Time.realtimeSinceStartup;
 	            Send(">" + ((int)rightData.Value.x).ToString() + "," + ((int)rightData.Value.y).ToString());
 			}
