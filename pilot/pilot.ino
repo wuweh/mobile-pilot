@@ -1,6 +1,7 @@
 #include "padroid.h"
 #include <Wire.h>   
 #include "LiquidCrystal_I2C.h"
+#include <Servo.h> 
 
 LiquidCrystal_I2C lcd(0x27,16,2);  // set the LCD address to 0x27 for a 16 chars and 2 line display
 
@@ -17,6 +18,13 @@ static int funx_key1 = -1;
 static int funx_key2 = -1;
 // 
 static int funx_cycs = 0;
+
+
+ 
+Servo myservo1;
+Servo myservo2;
+Servo myservo3;
+Servo myservo4;
 
 static void _on_leftpad(int x, int y) {
   pin_val1_x = (x + 256)/2;
@@ -97,18 +105,36 @@ void set_start()
 
 void set_pin()
 {
-        Serial.print(pin_val1_x);
-        Serial.print(",");
-        Serial.print(pin_val1_y);
-        Serial.print(",");
-        Serial.print(pin_val2_x);
-        Serial.print(",");
-        Serial.println(pin_val2_y);
+       // Serial.print(pin_val1_x);
+        //Serial.print(",");
+        //Serial.print(pin_val1_y);
+        //Serial.print(",");
+        //Serial.print(pin_val2_x);
+        //Serial.print(",");
+        //Serial.println(pin_val2_y);
         
-	analogWrite(pin1_x, pin_val1_x);
-	analogWrite(pin1_y, pin_val1_y);
-	analogWrite(pin2_x, pin_val2_x);
-	analogWrite(pin2_y, pin_val2_y);
+        int pos1 = map(pin_val1_x,0,255,0,180);
+        int pos2 = map(pin_val1_y,0,255,0,180);
+        int pos3 = map(pin_val2_x,0,255,0,180);
+        int pos4 = map(pin_val2_y,0,255,0,180);
+        
+        Serial.print(pos1);
+        Serial.print(",");
+        Serial.print(pos2);
+        Serial.print(",");
+        Serial.print(pos3);
+        Serial.print(",");
+        Serial.println(pos4);
+        
+        myservo1.write(pos1);
+        myservo2.write(pos2);
+        myservo3.write(pos3);
+        myservo4.write(pos4);
+        
+	//analogWrite(pin1_x, pin_val1_x);
+	//analogWrite(pin1_y, pin_val1_y);
+	//analogWrite(pin2_x, pin_val2_x);
+	//analogWrite(pin2_y, pin_val2_y);
 
   if(funx_cycs > 0)
   {
@@ -155,10 +181,16 @@ void set_output()
 }
 
 void setup() {
-  pinMode(pin1_x,OUTPUT);
-  pinMode(pin1_y,OUTPUT);
-  pinMode(pin2_x,OUTPUT);
-  pinMode(pin2_y,OUTPUT);
+  //pinMode(pin1_x,OUTPUT);
+  //pinMode(pin1_y,OUTPUT);
+  //pinMode(pin2_x,OUTPUT);
+  //pinMode(pin2_y,OUTPUT);
+  
+  myservo1.attach(pin1_x);
+  myservo2.attach(pin1_y);
+  myservo3.attach(pin2_x);
+  myservo4.attach(pin2_y);
+  
   
   lcd.init();                      // initialize the lcd 
  

@@ -15,11 +15,9 @@ grid_v_origin_color = transparent
 
 [_default_]
 min=0
-max=255
+max=180
 [Field1]
 color=gray
-min=0
-max=255
 [Field2]
 color=blue
 [Field3]
