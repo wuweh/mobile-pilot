@@ -21,21 +21,21 @@ static int funx_cycs = 0;
 static void _on_leftpad(int x, int y) {
   pin_val1_x = (x + 256)/2;
   pin_val1_y = (y + 256)/2;
-  Serial.print("L: ");
-  Serial.print(x);
-  Serial.print(",");
-  Serial.print(y);
-  Serial.print('\n');
+  //Serial.print("L: ");
+  //Serial.print(x);
+  //Serial.print(",");
+  //Serial.print(y);
+  //Serial.print('\n');
 }
 
 static void _on_rightpad(int x, int y) {
   pin_val2_x = (x + 256)/2;
   pin_val2_y = (y + 256)/2;
-  Serial.print("R: ");
-  Serial.print(x);
-  Serial.print(",");
-  Serial.print(y);
-  Serial.print('\n');
+  //Serial.print("R: ");
+  //Serial.print(x);
+  //Serial.print(",");
+  //Serial.print(y);
+  //Serial.print('\n');
 }
 
 
@@ -45,14 +45,14 @@ static void _on_select_button(int s) {
   	if (funx_cycs == 0)
   	{
 	  	funx_key1 = 1;
-	    Serial.println("Select down");
+	   // Serial.println("Select down");
   	}
   }
   else if (s == -1)
   {
   	if (funx_key1 == 1)
   	{
-	    Serial.println("Select up");
+	   // Serial.println("Select up");
 	    funx_cycs = 50;
   	}
   }
@@ -64,14 +64,14 @@ static void _on_start_button(int s) {
   	if (funx_cycs == 0)
   	{
 	  	funx_key2 = 1;
-	    Serial.println("Start down");
+	   // Serial.println("Start down");
   	}
   }
   else if (s == -1)
   {
   	if (funx_key2 == 1)
   	{
-	    Serial.println("Start up");
+	   // Serial.println("Start up");
 	    funx_cycs = 50;
   	}
   }
@@ -88,7 +88,7 @@ void set_select()
 
 void set_start()
 {
-	pin_val1_x = 0;
+  	pin_val1_x = 0;
 	pin_val2_x = 0;
 	
 	pin_val1_y = 0;
@@ -97,10 +97,19 @@ void set_start()
 
 void set_pin()
 {
+        Serial.print(pin_val1_x);
+        Serial.print(",");
+        Serial.print(pin_val1_y);
+        Serial.print(",");
+        Serial.print(pin_val2_x);
+        Serial.print(",");
+        Serial.println(pin_val2_y);
+        
 	analogWrite(pin1_x, pin_val1_x);
 	analogWrite(pin1_y, pin_val1_y);
 	analogWrite(pin2_x, pin_val2_x);
 	analogWrite(pin2_y, pin_val2_y);
+
   if(funx_cycs > 0)
   {
      delay(50 * funx_cycs);
@@ -134,10 +143,10 @@ void set_output()
 			funx_key1 = 0;
 			funx_key2 = 0;
 
-			pin_val1_x = 128;
-			pin_val1_y = 128;
-			pin_val2_x = 128;
-			pin_val2_y = 128;
+			//pin_val1_x = 128;
+			//pin_val1_y = 128;
+			//pin_val2_x = 128;
+			//pin_val2_y = 128;
 	}
 	else
 	{
