@@ -1,6 +1,6 @@
 #Mobile-Pilot
 ##Project's BG
-上次PPT科普了一下四轴飞行器（Quadrotor），以及目前主流的四轴飞行器及其应用和发展方向。本次输出目标为，在掌握四轴飞行器（Quadrotor）飞行基本原理和开发方法后，摆脱传统控制方式，通过`手机蓝牙`的方式，控制飞行器。<br />
+本项目输出目标为，在掌握四轴飞行器（Quadrotor）飞行基本原理和开发方法后，摆脱传统控制方式，通过`手机蓝牙`的方式，控制飞行器。<br />
 
 ###Basic Backgrouds about Quadrotor
 **1.Pixhawk**
