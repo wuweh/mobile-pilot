@@ -52,10 +52,21 @@ ArduPilot中的Copter模块是为多旋翼飞行器而开发的飞行控制软�
 同样的，在飞行器运行时，飞控会调用`update_flight_mode()`，再根据具体的模式，调用该模式的`mode_run()`函数。例如`stabilize_run()`函数将发射器输入转换为目标参数（roll旋转，pitch斜度，yaw angles偏转角度）。
 ![Manual Mode](http://dev.ardupilot.com/wp-content/uploads/sites/6/2013/06/AC_CodeOverview_ManualFlightMode.png)
 
-**2.AutoPilot飞行模式**<br />
+***Stabilize（自稳模式）***<br />
+自稳模式是最APM:Copter中最常用的手动飞行模式。在此模式下：<br />
+＊ 飞行员的旋转，俯仰操作控制飞行器的倾斜角度，当飞行员松开对应摇杆时，自稳模式自动保持飞行器水平。<br />
+＊ 如果飞行员必须经常地操作旋转，俯仰指令，此模式让飞行器如同在原地，不然会被风吹走。<br />
+＊ 当飞行员进行转向操作控制飞行器方向时，飞行员松开转向摇杆，在自稳模式下飞行器会保持当时的方向。<br />
+＊ 飞行员的油门操作控制飞行器马达的平均转速，也就是说持续不断的调节油门以维持高度。如果飞行员把油门摇杆向下打到底，马达会降到最低转速（MOT_SPIN_ARMED），如果当时飞行器仍在飞行过程中，则会失去高度而坠落。<br />
+＊ 给马达的油门大小会根据当时飞行器的倾角（例如，倾角变大时增加），以减少飞行员对飞行器高度改变所必需做的补偿。<br />
+＊ 在AC3.0.1版本及之前版本中，飞行器只能在自稳模式或特技模式下ARMED（解锁）。<br />
+`解锁`：是飞行器起飞前必须做的一项操作。解锁后，马达才能够运转。
+
+
+**3.AutoPilot飞行模式**<br />
 在AutoPilot飞行模式中，包含定高模式（AltHold），返航模式（RTL），自动模式（Auto）等等。<br />
 ![AutoPilot Mode](http://dev.ardupilot.com/wp-content/uploads/sites/6/2013/06/AC_CodeOverview_AutoFlightModes.png)
-***Auto Mode***
+***Auto Mode***<br />
 自动模式中，飞行器会遵循事先设定好的任务程序，由导航指令（例如：中途点waypoints）和“执行”指令（例如：按相机快门或其他不影响飞行器位置的指令）组成，存储在AutoPilot中。
 ![AutoPilot OverView](http://copter.ardupilot.tw/wp-content/uploads/2014/09/auto.png)
 自动模式整合定高模式的高度控制，和悬停模式的位置控制
