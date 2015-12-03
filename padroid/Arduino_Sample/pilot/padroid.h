@@ -29,6 +29,16 @@ void pd_setup(void);
 void pd_set_callback(pd_callback2 leftpad, pd_callback2 rightpad, pd_callback1 select, pd_callback1 start);
 
 /**
+ * @brief Sets the left D-Pad to adjust in single axis at one time.
+ */
+void pd_set_one_axis_mode_on_left(bool enabled);
+
+/**
+ * @brief Sets the right D-Pad to adjust in single axis at one time.
+ */
+void pd_set_one_axis_mode_on_right(bool enabled);
+
+/**
  * @brief You need to call this function each frame.
  */
 void pd_receive(void);

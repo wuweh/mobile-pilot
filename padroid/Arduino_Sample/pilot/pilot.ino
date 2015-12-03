@@ -32,8 +32,11 @@ static void _on_start_button(int s) {
 
 void setup() {
   pd_setup();
-  
+
   pd_set_callback(_on_leftpad, _on_rightpad, _on_select_button, _on_start_button);
+
+  pd_set_one_axis_mode_on_left(true);
+  pd_set_one_axis_mode_on_right(true);
 }
 
 void loop() {
