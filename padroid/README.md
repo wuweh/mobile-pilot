@@ -19,6 +19,12 @@ Paduino 是一个运行在 iOS 设备上的程序，通过它你可以将你的�
  * 使用 Xcode 编译并部署 iOS 项目到设备
  * 将 Arduino_Sample/pilot 文件夹中的 Arduino 项目编译烧写到 Arduino 开发板
 
+**连接方法**
+
+ * 打开 Arduino 开发板
+ * 打开 iOS App 并确保蓝牙处于开启状态
+ * iOS App 将自动连接 Arduino 开发板
+
 **指令列表**
 
  * "ld;" 左侧 D-Pad 按下
@@ -53,6 +59,12 @@ Paduino is an App running on an iOS device, which can make your mobile phone int
  * Build the iOS platform target project with Unity3D
  * Build and distribute iOS App with Xcode to your iOS device
  * Compile and burn the scratch in the Arduino_Sample/pilot folder to your Arduino board
+
+**Connecting**
+
+ * Turn on the Arduino board
+ * Start up the iOS App, ensure Bluetooth connection is enabled
+ * The iOS App will connect to the Arduino board automatically
 
 **AT command list**
 
