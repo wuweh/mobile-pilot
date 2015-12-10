@@ -66,6 +66,20 @@ ArduPilot中的Copter模块是为多旋翼飞行器而开发的飞行控制软�
 **3.AutoPilot飞行模式**<br />
 在AutoPilot飞行模式中，包含定高模式（AltHold），返航模式（RTL），自动模式（Auto）等等。<br />
 ![AutoPilot Mode](http://dev.ardupilot.com/wp-content/uploads/sites/6/2013/06/AC_CodeOverview_AutoFlightModes.png)
+
+***RTL Mode***<br />
+在返航（RTL）模式中飞行器会从它当是的位置飞到home（解锁的位置）的上方悬停。返航模式的行为可以由好多个参数的调整而加以控制。当选择返航模式后，飞行器会先上升到RTL_ALT高度，或维持当时高度，如果当时高度高于RTL_ALT高度，然后返航。预设RTL_ALT是15公尺。<br />
+![AutoPilot OverView](http://copter.ardupilot.tw/wp-content/uploads/2014/10/RTL.png)  
+RTL是依赖GPS的动作，所以GPS锁定是使用这个模式的前提。在解锁（arm）之前，需要确认APM的蓝色LED灯恒亮，而不是闪烁。如果GPS不带罗盘，GPS锁定后，LED会持续亮蓝灯。如果是GPS和罗盘的模组，GPS锁定后，LED会闪蓝灯。<br />
+RTL会命令飞行器回到home，也就是解锁的位置。`因此，home的位置永远应该是飞行器实际上GPS起飞的地点，没有障碍并且远离人群`。在APM:Copter中，如果GPS锁定，然后ARM飞行器，home就是飞行器当时解锁时的位置。也就是说，你在APM:Copter中，执行RTL，飞行器会回到她当时解锁时的位置。<br />
+
+在RTL模式中，可调整的参数有：  
+1.RTL_ALT:飞行器返航前会先飞到这个高度。`设为零会以当时的高度返航；返航高度可设为1-8000公分；预设返航高度为15公尺（1500）`  
+2.RTL_ALT_FINAL:在RTL的最后阶段，或者完成任务后，飞行器会飞到这个高度。`设为0会自动降落；最后返航高度可以设为0-1000公分`  
+3.RTL_LOIT_TIME:最后降落前，在‘Home’之上悬停的时间，以千分之一秒为为单位。`悬停时间可以设为0-60,000微秒`   
+4.WP_YAW_BEHAVIOR:设定飞控系统如何控制任务或者返航中的航向。`0表示不改变航向；1表示面向下一个中途点，包括返航中面向home；2表示面向下一个中途点，RTL除外（即飞行器返航中保持最后的航向）`
+5.LAND_SPEED:下降最后阶段的速度，以公分每秒为单位。`下降速度可设为每秒20-200公分`
+
 ***Auto Mode***<br />
 自动模式中，飞行器会遵循事先设定好的任务程序，由导航指令（例如：中途点waypoints）和“执行”指令（例如：按相机快门或其他不影响飞行器位置的指令）组成，存储在AutoPilot中。
 ![AutoPilot OverView](http://copter.ardupilot.tw/wp-content/uploads/2014/09/auto.png)
